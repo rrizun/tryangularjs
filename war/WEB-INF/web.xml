@@ -1,0 +1,21 @@
+<web-app>
+	<servlet>
+		<servlet-name>api</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<load-on-startup>1</load-on-startup>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>todo</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.spi.container.ContainerResponseFilters
+			</param-name>
+			<param-value>com.sun.jersey.api.container.filter.GZIPContentEncodingFilter
+			</param-value>
+		</init-param>
+	</servlet>
+    <servlet-mapping>
+        <servlet-name>api</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+</web-app>

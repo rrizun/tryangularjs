@@ -1,0 +1,54 @@
+<html ng-app>
+<head>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+<script>
+	function HelloController($scope, $http, $timeout) {
+		$scope.selected = [];
+		$scope.toggle = function(file) {
+			var index = $scope.selected.indexOf(file.id);
+			if (index==-1)
+				$scope.selected.push(file.id);
+			else
+				$scope.selected.splice(index, 1);
+		}
+		$scope.isSelected = function(file) {
+			return $scope.selected.indexOf(file.id)!=-1;
+		}
+		$scope.newfile = function() {
+			$scope.refresh();
+		}
+		$scope.refresh = function() {
+			$http.get('/api/files').success(
+					function(data, status, headers, config) {
+						$scope.files = data;
+					});
+		}
+		$scope.autorefresh = function() {
+			$scope.refresh();
+			$timeout($scope.autorefresh, 500);
+		}
+		$scope.autorefresh();
+		$scope.foo=function(){
+			window.alert("foo!");
+		}
+	}
+</script>
+</head>
+<body>
+	<div style='width:50%' ng-controller='HelloController'>
+		<h1 class='text-success'>Files selected={{selected.length}}</h1>
+		<button class='btn btn-primary' ng-click='newfile()'>New</button>
+		<button class='btn btn-primary' ng-click='refresh()'>Refresh</button>
+		<button class='btn btn-danger'>Delete</button>
+		<table cellpadding='12px' style='cursor:pointer;width:100%;' ng-repeat="file in files track by file.id">
+			<tr ng-click='toggle(file)' ng-dblclick='foo()' ng-style="{'background-color':isSelected(file)?'#ffc':''}">
+				<td>{{file.id}}</td>
+				<td style='width:100%'>{{file.name}}</td>
+				<td>{{file.size}}</td>
+				<td class='text-muted'>{{file.ts}}</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
