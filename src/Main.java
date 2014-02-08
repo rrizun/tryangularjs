@@ -7,5 +7,6 @@ public class Main {
 		Server server = new Server(8001);
 		server.setHandler(new WebAppContext("war", "/tryangularjs"));
 		server.start();
+		System.out.println("http://localhost:8001/tryangularjs");
 	}
 }
