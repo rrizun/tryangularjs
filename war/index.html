@@ -19,7 +19,7 @@
 			$scope.refresh();
 		}
 		$scope.refresh = function() {
-			$http.get('/api/files').success(
+			$http.get('api/files').success(
 					function(data, status, headers, config) {
 						$scope.files = data;
 					});

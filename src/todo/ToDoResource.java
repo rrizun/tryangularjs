@@ -27,7 +27,7 @@ public class ToDoResource {
 	@Path("/files")
 	public List<ToDo> files() {
 		List<ToDo> response = Lists.newArrayList();
-		File[] files = new File("/tmp").listFiles();
+		File[] files = new File("/lib").listFiles();
 		if (files != null) {
 			for (File file : files) {
 				if (file.isFile())
